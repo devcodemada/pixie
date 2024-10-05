@@ -16,13 +16,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.devcodemada.pixie"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.devcodemada.pixie"
     },
     "web": {
       "bundler": "metro",
@@ -34,6 +36,18 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "2b3ea66f-af9a-40c1-b0be-6746ffa385ec"
+      }
+    },
+    "owner": "devcodemada",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/2b3ea66f-af9a-40c1-b0be-6746ffa385ec"
     }
   }
 }
