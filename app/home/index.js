@@ -1,8 +1,10 @@
 import { FontAwesome6 } from "@expo/vector-icons";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { apiCall } from "../../api/index";
 import Categories from "../../components/Categories";
+import ImageGrid from "../../components/ImageGrid";
 import SearchInput from "../../components/SearchInput";
 import { theme } from "../../constants/theme";
 import { hp, wp } from "../../helpers/common";
@@ -12,8 +14,27 @@ const HomeScreen = () => {
   const paddingTop = top > 0 ? top + 10 : 30;
   const [activeCategory, setActiveCategory] = useState(null);
 
+  const [images, setImages] = useState([]);
+
   const handleChangeCategory = (cat) => {
     setActiveCategory(cat);
+  };
+
+  useEffect(() => {
+    fetchImages();
+  }, []);
+
+  const fetchImages = async (params = { page: 1 }, append = false) => {
+    let res = await apiCall(params);
+    console.log("resultttt : ", res);
+    if (res.success && res?.data?.hits) {
+      if (append) {
+        setImages([images, ...res.data.hits]);
+      } else {
+        setImages([...res.data.hits]);
+      }
+    }
+    console.log("got result : ", res.data?.hits[0]);
   };
 
   return (
@@ -43,6 +64,9 @@ const HomeScreen = () => {
             handleChangeCategory={handleChangeCategory}
           />
         </View>
+
+        {/* masonry */}
+        <View>{images.length > 0 && <ImageGrid images={images} />}</View>
       </ScrollView>
     </View>
   );
